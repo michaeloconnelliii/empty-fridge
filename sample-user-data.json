@@ -1,0 +1,5 @@
+{ 
+    "ingredients" : ["ahi tuna", "avocado", "lemon"], 
+    "food_preferences": ["mexican",  "savory"],
+    "rank_by": [ "delicious"]
+}
