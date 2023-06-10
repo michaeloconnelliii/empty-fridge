@@ -5,7 +5,7 @@ function RecipeListElement({ recipe }) {
   const additionalIngredients = recipe.additional_ingredients_needed.join(", ");
   
   return (
-    <li>
+    <li className='row'>
       <div>
         <h3>{ recipe.title }</h3>
         <h4>Recipe Description</h4>
@@ -31,16 +31,16 @@ function RecipeList({ recipes }) {
   );
 
   return (
-    <>
+    <div className='container'>
       <h2>Recipes</h2>
-      <ul>{ RecipeListElements }</ul>
-    </>
+      <ul className='conatiner'>{ RecipeListElements }</ul>
+    </div>
   );
 }
 
 function UserList({ userInputList }) {
   return (
-    <ul className="list-unstyled user-list">
+    <ul className="col list-unstyled user-list">
         {userInputList.map((userInputListElement) => {
           return <li key={userInputListElement}>{userInputListElement}</li>
         })}
@@ -50,7 +50,7 @@ function UserList({ userInputList }) {
 
 function UserLists({ userInput }) {
   return (
-    <div className="d-flex justify-content-between">
+    <div className='row'>
       <UserList userInputList={ userInput.ingredients } />
       <UserList userInputList={ userInput.food_preferences } />
       <UserList userInputList={ userInput.rank_by } />
@@ -60,23 +60,25 @@ function UserLists({ userInput }) {
 
 function SearchBar() {
   return (
-    <form className="d-flex mb-3 searchbar-form">
-      <select className="form-select">
+    <form className="row">
+      <select className="col form-select">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
         <option value="Rank">Rank By</option>
       </select>
-      <input type="text" className="form-control" placeholder="Enter..." />
-      <button className="btn-primary">Add</button>
-      <button className="btn-danger">Clear</button>
-      <button className="btn-secondary" title="Help">?</button>
+      <input type="text" className="col form-control" placeholder="Enter..." />
+      <div className='col'>
+        <button className="btn-primary">Add</button>
+        <button className="btn-danger">Clear</button>
+        <button className="btn-secondary" title="Help">?</button>
+      </div>
     </form>
   );
 }
 
 function FilterableUserPreferenceTable({userInput}) {
   return (
-    <div>
+    <div className='container'>
       <SearchBar />
       <UserLists userInput={userInput} />
     </div>
@@ -85,8 +87,8 @@ function FilterableUserPreferenceTable({userInput}) {
 
 function FilterableRecipeTable({recipes, data}) {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center">
-      <h1 className="mb-4">Empty Fridge</h1>
+    <div className='container'>
+      <h1 className='mb-4'>Empty Fridge</h1>
       <FilterableUserPreferenceTable userInput={data} />
       <RecipeList recipes={recipes} />
     </div>
