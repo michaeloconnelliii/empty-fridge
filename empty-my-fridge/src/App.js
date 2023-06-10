@@ -1,3 +1,5 @@
+import './App.css';
+
 function RecipeListElement({ recipe }) {
   const ingredientUserHas = recipe.ingredients_user_has.join(", ");
   const additionalIngredients = recipe.additional_ingredients_needed.join(", ");
@@ -38,7 +40,7 @@ function RecipeList({ recipes }) {
 
 function UserList({ userInputList }) {
   return (
-    <ul>
+    <ul className="list-unstyled user-list">
         {userInputList.map((userInputListElement) => {
           return <li key={userInputListElement}>{userInputListElement}</li>
         })}
@@ -48,36 +50,44 @@ function UserList({ userInputList }) {
 
 function UserLists({ userInput }) {
   return (
-    <>
+    <div className="d-flex justify-content-between">
       <UserList userInputList={ userInput.ingredients } />
       <UserList userInputList={ userInput.food_preferences } />
       <UserList userInputList={ userInput.rank_by } />
-    </>
+    </div>
   )
 }
 
 function SearchBar() {
   return (
-    <form>
-      <select>
+    <form className="d-flex mb-3 searchbar-form">
+      <select className="form-select">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
         <option value="Rank">Rank By</option>
       </select>
-      <input type="text" placeholder="Enter..." />
-      <button>Add</button>
-      <button title="Help">?</button>
-      <button>Clear</button>
+      <input type="text" className="form-control" placeholder="Enter..." />
+      <button className="btn-primary">Add</button>
+      <button className="btn-danger">Clear</button>
+      <button className="btn-secondary" title="Help">?</button>
     </form>
   );
 }
 
-function FilterableRecipeTable({recipes, data}) {
+function FilterableUserPreferenceTable({userInput}) {
   return (
     <div>
-      <h1>Empty My Fridge</h1>
       <SearchBar />
-      <UserLists userInput={data} />
+      <UserLists userInput={userInput} />
+    </div>
+  )
+}
+
+function FilterableRecipeTable({recipes, data}) {
+  return (
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <h1 className="mb-4">Empty Fridge</h1>
+      <FilterableUserPreferenceTable userInput={data} />
       <RecipeList recipes={recipes} />
     </div>
   );
