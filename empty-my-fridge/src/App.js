@@ -50,7 +50,7 @@ function UserPreference({ userInputList }) {
 
 function UserPreferenceTable({ userInput }) {
   return (
-    <table className='table'>
+    <table className='table text-center'>
       <thead className='table-borderless'>
         <tr>
           <th>Ingredients</th>
@@ -71,17 +71,17 @@ function UserPreferenceTable({ userInput }) {
 
 function SearchBar() {
   return (
-    <form className="row mb-4">
-      <select className="col form-select">
+    <form className="form-inline form-row justify-content-sm-center">
+      <select className="form-control form-control-sm mr-2">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
         <option value="Rank">Rank By</option>
       </select>
-      <input type="text" className="col form-control" placeholder="Enter..." />
-      <div className='col'>
-        <button className="btn-primary">Add</button>
-        <button className="btn-danger">Clear</button>
-        <button className="btn-secondary" title="Help">?</button>
+      <input type="text" className="form-control mr-2" placeholder="Enter..." />
+      <div className='input-group-sm'>
+        <button className="btn btn-primary mr-2">Add</button>
+        <button className="btn btn-danger mr-2">Clear</button>
+        <button className="btn btn-secondary" title="Help">?</button>
       </div>
     </form>
   );
@@ -99,7 +99,7 @@ function FilterableUserPreferenceTable({userInput}) {
 function FilterableRecipeTable({recipes, data}) {
   return (
     <div className='container'>
-      <h1 className='mb-4'>Empty Fridge</h1>
+      <h1 className='mb-4 text-center'>Empty Fridge</h1>
       <FilterableUserPreferenceTable userInput={data} />
       <RecipeList recipes={recipes} />
     </div>
