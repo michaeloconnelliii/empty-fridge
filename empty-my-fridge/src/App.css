@@ -1,9 +1,0 @@
-.user-list {
-  list-style: none;
-}
-
-.user-list li:before {
-  content: "X ";
-  font-weight: bold;
-  cursor: pointer;
-}

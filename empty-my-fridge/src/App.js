@@ -38,29 +38,40 @@ function RecipeList({ recipes }) {
   );
 }
 
-function UserList({ userInputList }) {
+function UserPreference({ userInputList }) {
   return (
-    <ul className="col list-unstyled user-list">
+    <td>
         {userInputList.map((userInputListElement) => {
-          return <li key={userInputListElement}>{userInputListElement}</li>
+          return <div key={userInputListElement}>{userInputListElement}</div>
         })}
-    </ul>
+    </td>
   );
 }
 
-function UserLists({ userInput }) {
+function UserPreferenceTable({ userInput }) {
   return (
-    <div className='row'>
-      <UserList userInputList={ userInput.ingredients } />
-      <UserList userInputList={ userInput.food_preferences } />
-      <UserList userInputList={ userInput.rank_by } />
-    </div>
+    <table className='table'>
+      <thead className='table-borderless'>
+        <tr>
+          <th>Ingredients</th>
+          <th>Preferences</th>
+          <th>Rank By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <UserPreference userInputList={ userInput.ingredients } />
+          <UserPreference userInputList={ userInput.food_preferences } />
+          <UserPreference userInputList={ userInput.rank_by } />
+        </tr>
+      </tbody>
+    </table>
   )
 }
 
 function SearchBar() {
   return (
-    <form className="row">
+    <form className="row mb-4">
       <select className="col form-select">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
@@ -80,7 +91,7 @@ function FilterableUserPreferenceTable({userInput}) {
   return (
     <div className='container'>
       <SearchBar />
-      <UserLists userInput={userInput} />
+      <UserPreferenceTable userInput={userInput} />
     </div>
   )
 }
