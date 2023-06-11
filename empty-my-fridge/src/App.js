@@ -71,15 +71,15 @@ function UserPreferenceTable({ userInput }) {
 
 function SearchBar() {
   return (
-    <form className="form-inline form-row justify-content-sm-center">
+    <form className="form-inline justify-content-sm-center">
       <select className="form-control form-control-sm mr-2">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
         <option value="Rank">Rank By</option>
       </select>
       <input type="text" className="form-control mr-2" placeholder="Enter..." />
-      <div className='input-group-sm'>
-        <button className="btn btn-primary mr-2">Add</button>
+      <div className='ml-md-0 ml-sm-5'>
+        <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3">Add</button>
         <button className="btn btn-danger mr-2">Clear</button>
         <button className="btn btn-secondary" title="Help">?</button>
       </div>
