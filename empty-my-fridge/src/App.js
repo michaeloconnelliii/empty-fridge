@@ -19,6 +19,15 @@ function RecipeListElement({ recipe }) {
   );
 }
 
+function RecipeSearchBar() {
+  return (
+    <form className='form-inline justify-content-center mb-4'>
+      <button className='btn btn-primary mr-2'>Find Recipes</button>
+      <button className='btn btn-danger'>Clear Recipes</button>
+    </form>
+  );
+}
+
 function RecipeList({ recipes }) {
   let RecipeListElements = [];
   recipes.forEach((recipe) => {
@@ -32,7 +41,8 @@ function RecipeList({ recipes }) {
 
   return (
     <div className='container'>
-      <h2>Recipes</h2>
+      <h2 className='text-center'>Recipes</h2>
+      <RecipeSearchBar />
       <ul className='conatiner'>{ RecipeListElements }</ul>
     </div>
   );
