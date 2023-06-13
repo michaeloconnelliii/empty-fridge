@@ -1,21 +1,29 @@
 import './App.css';
 
-function RecipeListElement({ recipe }) {
+function RecipeAccordionElement({ recipe }) {
   const ingredientUserHas = recipe.ingredients_user_has.join(", ");
   const additionalIngredients = recipe.additional_ingredients_needed.join(", ");
   
   return (
-    <li className='row'>
-      <div>
-        <h3>{ recipe.title }</h3>
-        <h4>Recipe Description</h4>
-        <p>{ recipe.recipe_description }</p>
-        <h4>Ingreidient User Has</h4>
-        <p>{ ingredientUserHas }</p>
-        <h4>Inredient User Needs</h4>
-        <p>{ additionalIngredients }</p>
+    <div className='card'>
+      <div className="card-header" id={`recipeHeader${recipe.id}`}>
+        <h3>
+        <button className="btn btn-link btn-block" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
+          { recipe.title }
+        </button>
+        </h3>
       </div>
-    </li>
+      <div id={`recipeCollapse${recipe.id}`} className="collapse" aria-labelledby={`recipeHeader${recipe.id}`} >
+        <div className="card-body">
+          <h4>Description</h4>
+          <p>{ recipe.recipe_description }</p>
+          <h4>Ingredients You Have</h4>
+          <p>{ ingredientUserHas }</p>
+          <h4>Inredients You Need</h4>
+          <p>{ additionalIngredients }</p>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -28,11 +36,11 @@ function RecipeSearchBar() {
   );
 }
 
-function RecipeList({ recipes }) {
-  let RecipeListElements = [];
+function RecipeAccordion({ recipes }) {
+  let RecipeAccordionElements = [];
   recipes.forEach((recipe) => {
-    RecipeListElements.push(
-      <RecipeListElement
+    RecipeAccordionElements.push(
+      <RecipeAccordionElement
         key = { recipe.id }
         recipe = { recipe } />
       );
@@ -41,9 +49,11 @@ function RecipeList({ recipes }) {
 
   return (
     <div className='container'>
-      <h2 className='text-center'>Recipes</h2>
+      <h2 className='text-center mb-4'>Recipes</h2>
       <RecipeSearchBar />
-      <ul className='conatiner'>{ RecipeListElements }</ul>
+      <div className='accordion' id='recipeAccordion'>
+        { RecipeAccordionElements }
+      </div>
     </div>
   );
 }
@@ -111,7 +121,7 @@ function FilterableRecipeTable({recipes, data}) {
     <div className='container'>
       <h1 className='mb-4 text-center'>Empty Fridge</h1>
       <FilterableUserPreferenceTable userInput={data} />
-      <RecipeList recipes={recipes} />
+      <RecipeAccordion recipes={recipes} />
     </div>
   );
 }
