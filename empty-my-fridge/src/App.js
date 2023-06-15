@@ -60,10 +60,18 @@ function RecipeAccordion({ recipes }) {
 
 function UserPreference({ userInputList }) {
   return (
+
     <td>
+      <div className='d-inline-block text-left'>
         {userInputList.map((userInputListElement) => {
-          return <div key={userInputListElement}>{userInputListElement}</div>
+          return <div key={userInputListElement}>
+                      <button type="button" className="close mr-1" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        {userInputListElement}
+                  </div>
         })}
+      </div>
     </td>
   );
 }
