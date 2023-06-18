@@ -7,11 +7,16 @@ function RecipeAccordionElement({ recipe }) {
   return (
     <div className='card'>
       <div className="card-header" id={`recipeHeader${recipe.id}`}>
-        <h3>
-        <button className="btn btn-link btn-block" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
-          { recipe.title }
-        </button>
-        </h3>
+        <div className='d-flex justify-content-center align-items-baseline'>
+          <button type="button" class="close float-left" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3>
+          <button className="btn btn-link pl-1" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
+            { recipe.title }
+          </button>
+          </h3>
+        </div>
       </div>
       <div id={`recipeCollapse${recipe.id}`} className="collapse" aria-labelledby={`recipeHeader${recipe.id}`} >
         <div className="card-body">
@@ -65,7 +70,7 @@ function UserPreference({ userInputList }) {
       <div className='d-inline-block text-left'>
         {userInputList.map((userInputListElement) => {
           return <div key={userInputListElement}>
-                      <button type="button" className="close mr-1" aria-label="Close">
+                      <button type="button" className="close mr-1 float-left" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                         {userInputListElement}
