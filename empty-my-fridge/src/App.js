@@ -7,24 +7,27 @@ function RecipeAccordionElement({ recipe }) {
   return (
     <div className='card'>
       <div className="card-header" id={`recipeHeader${recipe.id}`}>
-        <div className='d-flex justify-content-center align-items-baseline'>
-          <button type="button" class="close float-left" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h3>
-          <button className="btn btn-link pl-1" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
-            { recipe.title }
-          </button>
+        <div className='d-flex justify-content-center position-relative'>
+          <h3 className='card-header-text'>
+            <button className="btn btn-link pl-1" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
+              { recipe.title }
+            </button>
           </h3>
+          <button className='remove-recipe-btn btn btn-outline-danger border-0 position-absolute'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+              <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+            </svg>
+        </button>
         </div>
       </div>
       <div id={`recipeCollapse${recipe.id}`} className="collapse" aria-labelledby={`recipeHeader${recipe.id}`} >
         <div className="card-body">
-          <h4>Description</h4>
+          <h4 className='font-weight-bold'>Description</h4>
           <p>{ recipe.recipe_description }</p>
-          <h4>Ingredients You Have</h4>
+          <h4 className='font-weight-bold'>Ingredients You Have</h4>
           <p>{ ingredientUserHas }</p>
-          <h4>Inredients You Need</h4>
+          <h4 className='font-weight-bold'>Inredients You Need</h4>
           <p>{ additionalIngredients }</p>
         </div>
       </div>
@@ -54,7 +57,7 @@ function RecipeAccordion({ recipes }) {
 
   return (
     <div className='container'>
-      <h2 className='text-center mb-4'>Recipes</h2>
+      <h2 className='text-center mb-4 font-weight-bold'>Recipes</h2>
       <RecipeSearchBar />
       <div className='accordion' id='recipeAccordion'>
         { RecipeAccordionElements }
@@ -70,7 +73,7 @@ function UserPreference({ userInputList }) {
       <div className='d-inline-block text-left'>
         {userInputList.map((userInputListElement) => {
           return <div key={userInputListElement}>
-                      <button type="button" className="close mr-1 float-left" aria-label="Close">
+                      <button type="button" className="close btn-close-white mr-1 float-left" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                         {userInputListElement}
@@ -132,7 +135,7 @@ function FilterableUserPreferenceTable({userInput}) {
 function FilterableRecipeTable({recipes, data}) {
   return (
     <div className='container'>
-      <h1 className='mb-4 text-center'>Empty Fridge</h1>
+      <h1 className='mb-4 mt-3 text-center font-weight-bold'>Empty Fridge</h1>
       <FilterableUserPreferenceTable userInput={data} />
       <RecipeAccordion recipes={recipes} />
     </div>
