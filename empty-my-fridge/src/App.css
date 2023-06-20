@@ -1,3 +1,12 @@
+body {
+    background: linear-gradient(0deg, #c4e0ec 0%, #ffffff 100%);
+    color: black;    
+}
+
+.close {
+    text-shadow: none;
+}
+
 .remove-recipe-btn {
     right: 0;
 }

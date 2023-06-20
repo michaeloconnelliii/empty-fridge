@@ -107,7 +107,7 @@ function UserPreferenceTable({ userInput }) {
 
 function SearchBar() {
   return (
-    <form className="form-inline justify-content-sm-center">
+    <form className="form-inline justify-content-sm-center mb-3">
       <select className="form-control form-control-sm mr-2">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
