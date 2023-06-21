@@ -91,27 +91,24 @@ function UserPreferenceTable({ userInput }) {
         <tr>
           <th>Ingredients</th>
           <th>Preferences</th>
-          <th>Rank By</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <UserPreference userInputList={ userInput.ingredients } />
           <UserPreference userInputList={ userInput.food_preferences } />
-          <UserPreference userInputList={ userInput.rank_by } />
         </tr>
       </tbody>
     </table>
   )
 }
 
-function SearchBar() {
+function UserPreferenceSearchBar() {
   return (
     <form className="form-inline justify-content-sm-center mb-3">
       <select className="form-control form-control-sm mr-2">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
-        <option value="Rank">Rank By</option>
       </select>
       <input type="text" className="form-control mr-2" placeholder="Enter..." />
       <div className='ml-md-0 ml-sm-5'>
@@ -126,7 +123,7 @@ function SearchBar() {
 function FilterableUserPreferenceTable({userInput}) {
   return (
     <div className='container'>
-      <SearchBar />
+      <UserPreferenceSearchBar />
       <UserPreferenceTable userInput={userInput} />
     </div>
   )
@@ -145,7 +142,6 @@ function FilterableRecipeTable({recipes, data}) {
 const USER_INPUT_DATA = {
   ingredients : ["ahi tuna", "avocado", "lemon"], 
   food_preferences: ["mexican",  "savory"],
-  rank_by: [ "delicious"]
 };
 
 const RECIPES = [
