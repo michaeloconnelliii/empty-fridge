@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 
 function RecipeAccordionElement({ recipe }) {
@@ -14,7 +15,7 @@ function RecipeAccordionElement({ recipe }) {
             </button>
           </h3>
           <button className='remove-recipe-btn btn btn-outline-danger border-0 position-absolute'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
             </svg>
@@ -69,8 +70,8 @@ function RecipeAccordion({ recipes }) {
 function UserPreference({ userInputList }) {
   return (
 
-    <td>
-      <div className='d-inline-block text-left'>
+    <td className='text-wrap'>
+      <div className='text-left text-break'>
         {userInputList.map((userInputListElement) => {
           return <div key={userInputListElement}>
                       <button type="button" className="close btn-close-white mr-1 float-left" aria-label="Close">
@@ -96,44 +97,67 @@ function UserPreferenceTable({ userInput }) {
       <tbody>
         <tr>
           <UserPreference userInputList={ userInput.ingredients } />
-          <UserPreference userInputList={ userInput.food_preferences } />
+          <UserPreference userInputList={ userInput.preferences } />
         </tr>
       </tbody>
     </table>
   )
 }
 
-function UserPreferenceSearchBar() {
+function UserPreferenceSearchBar({userInput, setUserPreferences}) {
+  let updatedUserInput = {...userInput};
+
+  function clearUserPreferences() {
+    const emptyPreferences = { 'ingredients': [], 'preferences': [] };
+    setUserPreferences(emptyPreferences);
+  }
+
+  function addUserPreference() {
+    const preferenceCategory = document.getElementById('preference-ddl').value;
+    const preferenceInput = document.getElementById('preference-input').value;
+    
+    if(preferenceCategory === 'Ingredient') {
+      updatedUserInput.ingredients.push(preferenceInput);
+    } else if(preferenceCategory === 'Preference') {
+      updatedUserInput.preferences.push(preferenceInput);
+    }
+
+    setUserPreferences(updatedUserInput);
+  }
+
   return (
     <form className="form-inline justify-content-sm-center mb-3">
-      <select className="form-control form-control-sm mr-2">
+      <select id='preference-ddl' className="form-control form-control-sm mr-2">
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
       </select>
-      <input type="text" className="form-control mr-2" placeholder="Enter..." />
+      <input id='preference-input' type="text" className="form-control mr-2" placeholder="Enter..." />
       <div className='ml-md-0 ml-sm-5'>
-        <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3">Add</button>
-        <button className="btn btn-danger mr-2">Clear</button>
+        <button id='addPreference' className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
+        <button className="btn btn-danger mr-2" onClick={clearUserPreferences}>Clear</button>
         <button className="btn btn-secondary" title="Help">?</button>
       </div>
     </form>
   );
 }
 
-function FilterableUserPreferenceTable({userInput}) {
+function FilterableUserPreferenceTable({userInput, setUserPreferences}) {
   return (
     <div className='container'>
-      <UserPreferenceSearchBar />
+      <UserPreferenceSearchBar userInput={userInput} setUserPreferences={setUserPreferences} />
       <UserPreferenceTable userInput={userInput} />
     </div>
   )
 }
 
-function FilterableRecipeTable({recipes, data}) {
+function FilterableRecipeTable() {
+  const [userPreferences, setUserPreferences] = useState({ 'ingredients': [], 'preferences': [] });
+  const [recipes, setRecipes] = useState([]);
+
   return (
     <div className='container'>
       <h1 className='mb-4 mt-3 text-center font-weight-bold'>Empty Fridge</h1>
-      <FilterableUserPreferenceTable userInput={data} />
+      <FilterableUserPreferenceTable userInput={userPreferences} setUserPreferences={setUserPreferences} />
       <RecipeAccordion recipes={recipes} />
     </div>
   );
@@ -141,7 +165,7 @@ function FilterableRecipeTable({recipes, data}) {
 
 const USER_INPUT_DATA = {
   ingredients : ["ahi tuna", "avocado", "lemon"], 
-  food_preferences: ["mexican",  "savory"],
+  preferences: ["mexican",  "savory"],
 };
 
 const RECIPES = [
