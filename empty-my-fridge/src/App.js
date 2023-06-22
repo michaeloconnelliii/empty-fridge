@@ -112,16 +112,19 @@ function UserPreferenceSearchBar({userInput, setUserPreferences}) {
     setUserPreferences(emptyPreferences);
   }
 
+  // Add preference according to ddl value. Clear input field after adding.
   function addUserPreference() {
-    const preferenceCategory = document.getElementById('preference-ddl').value;
-    const preferenceInput = document.getElementById('preference-input').value;
+    const preferenceCategoryVal = document.getElementById('preference-ddl').value;
+    const preferenceInput = document.getElementById('preference-input');
+    const preferenceInputVal = document.getElementById('preference-input').value;
     
-    if(preferenceCategory === 'Ingredient') {
-      updatedUserInput.ingredients.push(preferenceInput);
-    } else if(preferenceCategory === 'Preference') {
-      updatedUserInput.preferences.push(preferenceInput);
+    if(preferenceCategoryVal === 'Ingredient') {
+      updatedUserInput.ingredients.push(preferenceInputVal);
+    } else if(preferenceCategoryVal === 'Preference') {
+      updatedUserInput.preferences.push(preferenceInputVal);
     }
 
+    preferenceInput.value = '';
     setUserPreferences(updatedUserInput);
   }
 
