@@ -134,7 +134,7 @@ function UserPreferenceSearchBar({userInput, setUserPreferences}) {
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
       </select>
-      <input id='preference-input' type="text" className="form-control mr-2" placeholder="Enter..." />
+      <input id='preference-input' type="text" className="form-control mr-2" placeholder="Enter..." maxLength='200' />
       <div className='ml-md-0 ml-sm-5'>
         <button id='addPreference' className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
         <button className="btn btn-danger mr-2" onClick={clearUserPreferences}>Clear</button>
