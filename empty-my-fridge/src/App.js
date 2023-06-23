@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import './App.css';
+import React, { useEffect, useRef, useState } from 'react';
 
 function RecipeAccordionElement({ recipe }) {
   const ingredientUserHas = recipe.ingredients_user_has.join(", ");
@@ -72,8 +72,8 @@ function UserPreference({ userInputList }) {
 
     <td className='text-wrap'>
       <div className='text-left text-break'>
-        {userInputList.map((userInputListElement) => {
-          return <div key={userInputListElement}>
+        {userInputList.map((userInputListElement, i = 0) => {
+          return <div key={`${userInputListElement}${i++}`}>
                       <button type="button" className="close btn-close-white mr-1 float-left" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -104,40 +104,54 @@ function UserPreferenceTable({ userInput }) {
   )
 }
 
-function UserPreferenceSearchBar({userInput, setUserPreferences}) {
-  let updatedUserInput = {...userInput};
-
+function UserPreferenceSearchBar({setUserPreferences}) {
+  const [preferenceInput, setPreferenceInput] = useState('');
+  const [preferenceCategory, setPreferenceCategory] = useState('Ingredient');
+  
+  // Clear user preferences according to ddl value.
   function clearUserPreferences() {
-    const emptyPreferences = { 'ingredients': [], 'preferences': [] };
-    setUserPreferences(emptyPreferences);
+    setUserPreferences( prevUserInput => {
+      const updatedUserInput = { ...prevUserInput };
+
+      if(preferenceCategory === 'Ingredient') {
+        updatedUserInput.ingredients = [];
+      } else if(preferenceCategory === 'Preference') {
+        updatedUserInput.preferences = [];
+      }
+
+      return updatedUserInput;
+    });
+
+    setPreferenceInput('');
   }
 
   // Add preference according to ddl value. Clear input field after adding.
   function addUserPreference() {
-    const preferenceCategoryVal = document.getElementById('preference-ddl').value;
-    const preferenceInput = document.getElementById('preference-input');
-    const preferenceInputVal = document.getElementById('preference-input').value;
-    
-    if(preferenceCategoryVal === 'Ingredient') {
-      updatedUserInput.ingredients.push(preferenceInputVal);
-    } else if(preferenceCategoryVal === 'Preference') {
-      updatedUserInput.preferences.push(preferenceInputVal);
-    }
+    setUserPreferences( prevUserInput => {
+      const updatedUserInput = { ...prevUserInput };
 
-    preferenceInput.value = '';
-    setUserPreferences(updatedUserInput);
+      if(preferenceCategory === 'Ingredient') {
+        updatedUserInput.ingredients.push(preferenceInput);
+      } else if(preferenceCategory === 'Preference') {
+        updatedUserInput.preferences.push(preferenceInput);
+      }
+
+      return updatedUserInput;
+    });
+
+    setPreferenceInput('');
   }
 
   return (
     <form className="form-inline justify-content-sm-center mb-3">
-      <select id='preference-ddl' className="form-control form-control-sm mr-2">
+      <select id='preference-ddl' value={preferenceCategory} className="form-control form-control-sm mr-2" onChange={(e) => setPreferenceCategory(e.target.value)}>
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
       </select>
-      <input id='preference-input' type="text" className="form-control mr-2" placeholder="Enter..." maxLength='200' />
+      <input value={preferenceInput} type="text" className="form-control mr-2" placeholder="Enter..." maxLength='200' onChange={(e) => setPreferenceInput(e.target.value)} />
       <div className='ml-md-0 ml-sm-5'>
-        <button id='addPreference' className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
-        <button className="btn btn-danger mr-2" onClick={clearUserPreferences}>Clear</button>
+        <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
+        <button className="btn btn btn-danger mr-2" type='button' onClick={clearUserPreferences}>Clear Selected Category</button>
         <button className="btn btn-secondary" title="Help">?</button>
       </div>
     </form>
@@ -147,7 +161,7 @@ function UserPreferenceSearchBar({userInput, setUserPreferences}) {
 function FilterableUserPreferenceTable({userInput, setUserPreferences}) {
   return (
     <div className='container'>
-      <UserPreferenceSearchBar userInput={userInput} setUserPreferences={setUserPreferences} />
+      <UserPreferenceSearchBar setUserPreferences={setUserPreferences} />
       <UserPreferenceTable userInput={userInput} />
     </div>
   )
