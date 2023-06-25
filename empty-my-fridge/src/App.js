@@ -12,7 +12,7 @@ function RecipeAccordionElement({ recipe, setRecipes }) {
   }
   
   return (
-    <div className='card'>
+    <div className='card' key={recipe.id}>
       <div className="card-header" id={`recipeHeader${recipe.id}`}>
         <div className='d-flex justify-content-center position-relative'>
           <h3 className='card-header-text'>
@@ -36,13 +36,13 @@ function RecipeAccordionElement({ recipe, setRecipes }) {
           <h4 className='font-weight-bold'>Ingredients You Have</h4>
           <ul>
             {ingredientUserHas.map(
-              ingredient => { return <li>{ingredient}</li> }
+              (ingredient, i = 0) => { return <li key={`${ingredient}UserHas${i}`}>{ingredient}</li> }
             )}
           </ul>
           <h4 className='font-weight-bold'>Inredients You Need</h4>
           <ul>
             {additionalIngredients.map(
-                ingredient => { return <li>{ingredient}</li> }
+                (ingredient, i = 0) => { return <li key={`${ingredient}UserNeeds${i}`}>{ingredient}</li> }
             )}
           </ul>
         </div>
@@ -51,11 +51,44 @@ function RecipeAccordionElement({ recipe, setRecipes }) {
   );
 }
 
-function RecipeSearchBar() {
+function RecipeSearchBar({setRecipes}) {
+  const [isLoading, setIsLoading] = useState(false);
+  
+  function clearRecipes() {
+    setRecipes([]);
+  }
+
+  function findRecipes() {
+    setRecipes( prevRecipes => {
+      let updatedRecipes = [...prevRecipes];
+      setIsLoading(true);
+
+      setTimeout(() => {
+        console.log("Delayed for 3 seconds.");
+        setIsLoading(false);
+      }, 3000);
+
+      return prevRecipes;
+    });
+  }
+
   return (
     <form className='form-inline justify-content-center mb-4'>
-      <button className='btn btn-primary mr-2'>Find Recipes</button>
-      <button className='btn btn-danger'>Clear Recipes</button>
+      <button className={`btn btn-primary mr-2${isLoading ? ' isLoading' : ''} `}
+              type='button'
+              onClick={findRecipes}
+              disabled={isLoading}
+              >
+        <span class={`spinner-grow spinner-grow-sm mr-1 ${isLoading ? '' : 'd-none'}`} 
+              role="status" 
+              aria-hidden="true"></span>
+        {`${isLoading ? 'Loading...' : 'Find Recipes'}`}
+      </button>
+      <button className='btn btn-danger'
+              type='button'
+              onClick={clearRecipes}>
+        Clear Recipes
+      </button>
     </form>
   );
 }
@@ -75,7 +108,7 @@ function RecipeAccordion({ recipes, setRecipes }) {
   return (
     <div className='container'>
       <h2 className='text-center mb-4 font-weight-bold'>Recipes</h2>
-      <RecipeSearchBar />
+      <RecipeSearchBar setRecipes={setRecipes} />
       <div className='accordion' id='recipeAccordion'>
         { RecipeAccordionElements }
       </div>
