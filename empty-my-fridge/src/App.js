@@ -59,9 +59,10 @@ function RecipeSearchBar({setRecipes}) {
   }
 
   function findRecipes() {
+    setIsLoading(true);
+
     setRecipes( prevRecipes => {
       let updatedRecipes = [...prevRecipes];
-      setIsLoading(true);
 
       setTimeout(() => {
         console.log("Delayed for 3 seconds.");
@@ -79,7 +80,7 @@ function RecipeSearchBar({setRecipes}) {
               onClick={findRecipes}
               disabled={isLoading}
               >
-        <span class={`spinner-grow spinner-grow-sm mr-1 ${isLoading ? '' : 'd-none'}`} 
+        <span className={`spinner-grow spinner-grow-sm mr-1 ${isLoading ? '' : 'd-none'}`} 
               role="status" 
               aria-hidden="true"></span>
         {`${isLoading ? 'Loading...' : 'Find Recipes'}`}
