@@ -1,9 +1,15 @@
 import './App.css';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
-function RecipeAccordionElement({ recipe }) {
-  const ingredientUserHas = recipe.ingredients_user_has.join(", ");
-  const additionalIngredients = recipe.additional_ingredients_needed.join(", ");
+function RecipeAccordionElement({ recipe, setRecipes }) {
+  const ingredientUserHas = recipe.ingredients_user_has;
+  const additionalIngredients = recipe.additional_ingredients_needed;
+
+  function removeRecipe(recipeId) {
+    setRecipes( prevRecipes => {
+      return [...prevRecipes].filter( recipe => recipe.id !== recipeId);
+    });
+  }
   
   return (
     <div className='card'>
@@ -14,7 +20,8 @@ function RecipeAccordionElement({ recipe }) {
               { recipe.title }
             </button>
           </h3>
-          <button className='remove-recipe-btn btn btn-outline-danger border-0 position-absolute'>
+          <button className='remove-recipe-btn btn btn-outline-danger border-0 position-absolute'
+                  onClick={() => removeRecipe(recipe.id)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
@@ -27,9 +34,17 @@ function RecipeAccordionElement({ recipe }) {
           <h4 className='font-weight-bold'>Description</h4>
           <p>{ recipe.recipe_description }</p>
           <h4 className='font-weight-bold'>Ingredients You Have</h4>
-          <p>{ ingredientUserHas }</p>
+          <ul>
+            {ingredientUserHas.map(
+              ingredient => { return <li>{ingredient}</li> }
+            )}
+          </ul>
           <h4 className='font-weight-bold'>Inredients You Need</h4>
-          <p>{ additionalIngredients }</p>
+          <ul>
+            {additionalIngredients.map(
+                ingredient => { return <li>{ingredient}</li> }
+            )}
+          </ul>
         </div>
       </div>
     </div>
@@ -45,13 +60,14 @@ function RecipeSearchBar() {
   );
 }
 
-function RecipeAccordion({ recipes }) {
+function RecipeAccordion({ recipes, setRecipes }) {
   let RecipeAccordionElements = [];
   recipes.forEach((recipe) => {
     RecipeAccordionElements.push(
       <RecipeAccordionElement
         key = { recipe.id }
-        recipe = { recipe } />
+        recipe = { recipe }
+        setRecipes = { setRecipes } />
       );
     }
   );
@@ -67,14 +83,34 @@ function RecipeAccordion({ recipes }) {
   );
 }
 
-function UserPreference({ userInputList }) {
-  return (
+function UserPreference({ userInput, setUserPreferences }) {
+  
+  function removeUserPreference(userInputListElement, preferenceCategory) {
+    setUserPreferences( prevUserInput => {
+      const updatedUserInput = {...prevUserInput};
+      const preferenceArr = updatedUserInput.preferences;
+      const ingredientArr = updatedUserInput.ingredients;
+      
+      if(preferenceCategory === 'Ingredient') {
+        updatedUserInput.ingredients = ingredientArr.filter(ingredient => ingredient !== userInputListElement);
+      } else if(preferenceCategory === 'Category') {
+        updatedUserInput.preferences = preferenceArr.filter(preference => preference !== userInputListElement);
+      }
 
+      return updatedUserInput;
+    });
+  }
+
+  return (
+  <>
     <td className='text-wrap'>
       <div className='text-left text-break'>
-        {userInputList.map((userInputListElement, i = 0) => {
+        {userInput.ingredients.map((userInputListElement, i = 0) => {
           return <div key={`${userInputListElement}${i++}`}>
-                      <button type="button" className="close btn-close-white mr-1 float-left" aria-label="Close">
+                      <button type="button" 
+                              className="close btn-close-white mr-1 float-left" 
+                              aria-label="Close"
+                              onClick={() => removeUserPreference(userInputListElement, 'Ingredient')}>
                         <span aria-hidden="true">&times;</span>
                       </button>
                         {userInputListElement}
@@ -82,10 +118,27 @@ function UserPreference({ userInputList }) {
         })}
       </div>
     </td>
+
+    <td className='text-wrap'>
+      <div className='text-left text-break'>
+        {userInput.preferences.map((userInputListElement, i = 0) => {
+          return <div key={`${userInputListElement}${i++}`}>
+                      <button type="button" 
+                              className="close btn-close-white mr-1 float-left" 
+                              aria-label="Close"
+                              onClick={() => removeUserPreference(userInputListElement, 'Category')}>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        {userInputListElement}
+                  </div>
+        })}
+      </div>
+    </td>
+    </>
   );
 }
 
-function UserPreferenceTable({ userInput }) {
+function UserPreferenceTable({ userInput, setUserPreferences }) {
   return (
     <table className='table text-center'>
       <thead className='table-borderless'>
@@ -96,8 +149,8 @@ function UserPreferenceTable({ userInput }) {
       </thead>
       <tbody>
         <tr>
-          <UserPreference userInputList={ userInput.ingredients } />
-          <UserPreference userInputList={ userInput.preferences } />
+          <UserPreference userInput={ userInput } 
+                          setUserPreferences={setUserPreferences} />
         </tr>
       </tbody>
     </table>
@@ -107,7 +160,7 @@ function UserPreferenceTable({ userInput }) {
 function UserPreferenceSearchBar({setUserPreferences}) {
   const [preferenceInput, setPreferenceInput] = useState('');
   const [preferenceCategory, setPreferenceCategory] = useState('Ingredient');
-  
+
   // Clear user preferences according to ddl value.
   function clearUserPreferences() {
     setUserPreferences( prevUserInput => {
@@ -151,7 +204,7 @@ function UserPreferenceSearchBar({setUserPreferences}) {
       <input value={preferenceInput} type="text" className="form-control mr-2" placeholder="Enter..." maxLength='200' onChange={(e) => setPreferenceInput(e.target.value)} />
       <div className='ml-md-0 ml-sm-5'>
         <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
-        <button className="btn btn btn-danger mr-2" type='button' onClick={clearUserPreferences}>Clear Selected Category</button>
+        <button className="btn btn btn-danger mr-2" type='button' onClick={clearUserPreferences}>Clear</button>
         <button className="btn btn-secondary" title="Help">?</button>
       </div>
     </form>
@@ -159,23 +212,26 @@ function UserPreferenceSearchBar({setUserPreferences}) {
 }
 
 function FilterableUserPreferenceTable({userInput, setUserPreferences}) {
+
+
   return (
     <div className='container'>
       <UserPreferenceSearchBar setUserPreferences={setUserPreferences} />
-      <UserPreferenceTable userInput={userInput} />
+      <UserPreferenceTable userInput={userInput} 
+                           setUserPreferences={setUserPreferences} />
     </div>
   )
 }
 
-function FilterableRecipeTable() {
+function FilterableRecipeTable({recipeInput}) {
   const [userPreferences, setUserPreferences] = useState({ 'ingredients': [], 'preferences': [] });
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState(recipeInput);
 
   return (
     <div className='container'>
       <h1 className='mb-4 mt-3 text-center font-weight-bold'>Empty Fridge</h1>
       <FilterableUserPreferenceTable userInput={userPreferences} setUserPreferences={setUserPreferences} />
-      <RecipeAccordion recipes={recipes} />
+      <RecipeAccordion recipes={recipes} setRecipes={setRecipes} />
     </div>
   );
 }
@@ -210,5 +266,5 @@ const RECIPES = [
 ];
 
 export default function App() {
-  return <FilterableRecipeTable recipes={RECIPES} data={USER_INPUT_DATA} />;
+  return <FilterableRecipeTable recipeInput={RECIPES} />;
 }
