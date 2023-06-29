@@ -12,24 +12,38 @@ function RecipeAccordionElement({ recipe, setRecipes }) {
   }
   
   return (
-    <div className='card' key={recipe.id}>
-      <div className="card-header" id={`recipeHeader${recipe.id}`}>
+    <div className='card' 
+         key={recipe.id}>
+      <div className="card-header" 
+            id={`recipeHeader${recipe.id}`}>
         <div className='d-flex justify-content-center position-relative'>
           <h3 className='card-header-text'>
-            <button className="btn btn-link pl-1" type="button" data-toggle="collapse" data-target={`#recipeCollapse${recipe.id}`} aria-expanded="true" aria-controls={`recipeCollapse${recipe.id}`}>
+            <button className="btn btn-link pl-1" 
+                    type="button" 
+                    data-toggle="collapse" 
+                    data-target={`#recipeCollapse${recipe.id}`} 
+                    aria-expanded="true" 
+                    aria-controls={`recipeCollapse${recipe.id}`}>
               { recipe.title }
             </button>
           </h3>
           <button className='remove-recipe-btn btn btn-outline-danger border-0 position-absolute'
                   onClick={() => removeRecipe(recipe.id)}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 width="16" 
+                 height="16" 
+                 fill="currentColor" 
+                 className="bi bi-trash" 
+                 viewBox="0 0 16 16">
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
             </svg>
         </button>
         </div>
       </div>
-      <div id={`recipeCollapse${recipe.id}`} className="collapse" aria-labelledby={`recipeHeader${recipe.id}`} >
+      <div id={`recipeCollapse${recipe.id}`} 
+           className="collapse" 
+           aria-labelledby={`recipeHeader${recipe.id}`} >
         <div className="card-body">
           <h4 className='font-weight-bold'>Description</h4>
           <p>{ recipe.recipe_description }</p>
@@ -110,7 +124,8 @@ function RecipeAccordion({ recipes, setRecipes }) {
     <div className='container'>
       <h2 className='text-center mb-4 font-weight-bold'>Recipes</h2>
       <RecipeSearchBar setRecipes={setRecipes} />
-      <div className='accordion' id='recipeAccordion'>
+      <div className='accordion' 
+           id='recipeAccordion'>
         { RecipeAccordionElements }
       </div>
     </div>
@@ -231,14 +246,30 @@ function UserPreferenceSearchBar({setUserPreferences}) {
 
   return (
     <form className="form-inline justify-content-sm-center mb-3">
-      <select id='preference-ddl' value={preferenceCategory} className="form-control form-control-sm mr-2" onChange={(e) => setPreferenceCategory(e.target.value)}>
+      <select id='preference-ddl' 
+              value={preferenceCategory} 
+              className="form-control form-control-sm mr-2" 
+              onChange={(e) => setPreferenceCategory(e.target.value)}>
         <option value="Ingredient">Ingredient</option>
         <option value="Preference">Preference</option>
       </select>
-      <input value={preferenceInput} type="text" className="form-control mr-2" placeholder="Enter..." maxLength='200' onChange={(e) => setPreferenceInput(e.target.value)} />
+      <input value={preferenceInput} 
+             type="text" 
+             className="form-control mr-2" 
+             placeholder="Enter..." 
+             maxLength='200' 
+             onChange={(e) => setPreferenceInput(e.target.value)} />
       <div className='ml-md-0 ml-sm-5'>
-        <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" type='button' onClick={addUserPreference}>Add</button>
-        <button className="btn btn btn-danger mr-2" type='button' onClick={clearUserPreferences}>Clear</button>
+        <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" 
+                type='button' 
+                onClick={addUserPreference}>
+          Add
+        </button>
+        <button className="btn btn btn-danger mr-2" 
+                type='button' 
+                onClick={clearUserPreferences}>
+          Clear
+        </button>
         <button className="btn btn-secondary" title="Help">?</button>
       </div>
     </form>
