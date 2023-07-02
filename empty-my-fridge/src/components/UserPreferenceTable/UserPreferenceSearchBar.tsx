@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-
-interface UserInput {
-  ingredients: String[],
-  preferences: String[]
-};
-
-interface SetUserPreferences {
-  setUserPreferences: React.Dispatch<React.SetStateAction<UserInput>>;
-};
+import { UserInput, SetUserPreferences } from '@/types';
 
 export default function UserPreferenceSearchBar({setUserPreferences}: SetUserPreferences) {
     const [preferenceInput, setPreferenceInput] = useState('');

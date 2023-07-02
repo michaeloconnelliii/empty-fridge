@@ -1,11 +1,7 @@
 import UserPreference from './UserPreference';
+import { UserPreferences } from '@/types';
 
-type Props = {
-  userInput : {string: string[]},
-  setUserPreferences: Object
-};
-
-export default function UserPreferenceTable({ userInput, setUserPreferences }: Props) {
+export default function UserPreferenceTable({ userInput, setUserPreferences }: UserPreferences) {
     return (
       <table className='table text-center'>
         <thead className='table-borderless'>
