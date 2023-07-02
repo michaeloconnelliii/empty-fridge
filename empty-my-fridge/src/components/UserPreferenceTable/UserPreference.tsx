@@ -1,15 +1,17 @@
-export default function UserPreference({ userInput, setUserPreferences }) {
+import { UserPreferences } from '@/types';
+
+export default function UserPreference({ userInput, setUserPreferences }: UserPreferences) {
   
-    function removeUserPreference(userInputListElement, preferenceCategory) {
+    function removeUserPreference(userInputListElement: String, preferenceCategory: String) {
       setUserPreferences( prevUserInput => {
         const updatedUserInput = {...prevUserInput};
         const preferenceArr = updatedUserInput.preferences;
         const ingredientArr = updatedUserInput.ingredients;
         
         if(preferenceCategory === 'Ingredient') {
-          updatedUserInput.ingredients = ingredientArr.filter(ingredient => ingredient !== userInputListElement);
+          updatedUserInput.ingredients = ingredientArr.filter((ingredient: String) => ingredient !== userInputListElement);
         } else if(preferenceCategory === 'Category') {
-          updatedUserInput.preferences = preferenceArr.filter(preference => preference !== userInputListElement);
+          updatedUserInput.preferences = preferenceArr.filter((preference: String) => preference !== userInputListElement);
         }
   
         return updatedUserInput;
