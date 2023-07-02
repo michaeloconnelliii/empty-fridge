@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { UserInput, SetUserPreferences } from '@/types';
+import { UserInput, UserPreferencesInvokeSet } from '@/types';
 
-export default function UserPreferenceSearchBar({setUserPreferences}: SetUserPreferences) {
+export default function UserPreferenceSearchBar({userInput, setUserPreferences}: UserPreferencesInvokeSet) {
     const [preferenceInput, setPreferenceInput] = useState('');
     const [preferenceCategory, setPreferenceCategory] = useState('Ingredient');
   
