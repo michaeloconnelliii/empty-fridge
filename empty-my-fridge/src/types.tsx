@@ -9,3 +9,20 @@ export interface UserPreferencesInvokeSet {
     userInput: UserInput,
     setUserPreferences: SetUserPreferencesFn
 };
+
+export interface RecipeInputElement {
+    id: React.Key,
+    title: String,
+    recipe_description: String,
+    ingredients_user_has: String[],
+    additional_ingredients_needed: String[]
+}
+
+export type RecipeInput = RecipeInputElement[];
+
+export type SetRecipeInputFn = (prevRecipeInput: React.Dispatch<RecipeInput>) => RecipeInput;
+
+export interface RecipeInputs {
+    recipe: RecipeInputElement,
+    setRecipes: SetRecipeInputFn
+};
