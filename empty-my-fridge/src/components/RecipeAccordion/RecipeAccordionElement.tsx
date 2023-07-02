@@ -1,6 +1,6 @@
-import { RecipeInputs } from "@/types";
+import { RecipeInputSingle } from "@/types";
 
-export default function RecipeAccordionElement({ recipe, setRecipes } : RecipeInputs) {
+export default function RecipeAccordionElement({ recipe, setRecipes } : RecipeInputSingle) {
     const ingredientUserHas = recipe.ingredients_user_has;
     const additionalIngredients = recipe.additional_ingredients_needed;
   

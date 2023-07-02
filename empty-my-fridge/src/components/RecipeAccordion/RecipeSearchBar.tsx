@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { SetRecipeInput } from '@/types';
+import { RecipeInputs } from '@/types';
 
-export default function RecipeSearchBar({setRecipes}: SetRecipeInput) {
+export default function RecipeSearchBar({recipes, setRecipes}: RecipeInputs) {
     const [isLoading, setIsLoading] = useState(false);
     
     function clearRecipes() {
-      setRecipes([]);
+      setRecipes(() => []);
     }
   
     function findRecipes() {
