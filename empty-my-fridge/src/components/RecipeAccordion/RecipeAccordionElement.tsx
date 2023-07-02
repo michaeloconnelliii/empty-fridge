@@ -1,8 +1,10 @@
-export default function RecipeAccordionElement({ recipe, setRecipes }) {
+import { RecipeInputs } from "@/types";
+
+export default function RecipeAccordionElement({ recipe, setRecipes } : RecipeInputs) {
     const ingredientUserHas = recipe.ingredients_user_has;
     const additionalIngredients = recipe.additional_ingredients_needed;
   
-    function removeRecipe(recipeId) {
+    function removeRecipe(recipeId: React.Key | null | undefined) {
       setRecipes( prevRecipes => {
         return [...prevRecipes].filter( recipe => recipe.id !== recipeId);
       });
