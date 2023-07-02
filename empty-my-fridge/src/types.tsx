@@ -20,6 +20,10 @@ export interface RecipeInputElement {
 
 export type RecipeInput = RecipeInputElement[];
 
+export interface SetRecipeInput {
+    setRecipes: React.Dispatch<React.SetStateAction<RecipeInput>>;
+}
+
 export type SetRecipeInputFn = (prevRecipeInput: React.Dispatch<RecipeInput>) => RecipeInput;
 
 export interface RecipeInputs {

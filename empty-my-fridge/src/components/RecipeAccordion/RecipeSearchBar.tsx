@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { SetRecipeInput } from '@/types';
 
-export default function RecipeSearchBar({setRecipes}) {
+export default function RecipeSearchBar({setRecipes}: SetRecipeInput) {
     const [isLoading, setIsLoading] = useState(false);
     
     function clearRecipes() {
