@@ -3,7 +3,11 @@ import FilterableUserPreferenceTable from '../UserPreferenceTable/FilterableUser
 import RecipeAccordion from '../RecipeAccordion/RecipeAccordion'
 import { RecipeInput, UserInput } from '@/types';
 
-export default function FilterableRecipeTable(recipeInput: RecipeInput) {
+interface FilterableRecipeTableProps {
+  recipeInput: RecipeInput;
+}
+
+export default function FilterableRecipeTable({ recipeInput }: FilterableRecipeTableProps) {
     const [userPreferences, setUserPreferences] = useState<UserInput>({ ingredients: [], preferences: [] });
     const [recipes, setRecipes] = useState<RecipeInput>(recipeInput);
   

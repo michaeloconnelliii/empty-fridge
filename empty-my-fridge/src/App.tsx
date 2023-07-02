@@ -1,13 +1,13 @@
 import './styles/App.css';
 import FilterableRecipeTable from './components/RecipeTable/FilterableRecipeTable'
-import React from 'react';
+import { RecipeInput } from './types';
 
 const USER_INPUT_DATA = {
   ingredients : ["ahi tuna", "avocado", "lemon"], 
   preferences: ["mexican",  "savory"],
 };
 
-const RECIPES = [
+const RECIPES : RecipeInput = [
   {
     id: 9271,
     title: "Mexican Tuna Ceviche",
@@ -30,6 +30,7 @@ const RECIPES = [
     additional_ingredients_needed: ["mixed greens", "red onion", "cucumber", "cherry tomatoes", "olive oil"]
   }
 ];
+
 
 export default function App() {
   return <FilterableRecipeTable recipeInput={RECIPES} />;
