@@ -1,7 +1,7 @@
 import UserPreference from './UserPreference';
-import { UserPreferencesInvokeSet } from '@/types';
+import { UserPreferences } from '@/types';
 
-export default function UserPreferenceTable({ userInput, setUserPreferences }: UserPreferencesInvokeSet) {
+export default function UserPreferenceTable({ userInput, setUserPreferences }: UserPreferences) {
     return (
       <table className='table text-center'>
         <thead className='table-borderless'>

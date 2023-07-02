@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FilterableUserPreferenceTable from '../UserPreferenceTable/FilterableUserPreferenceTable';
 import RecipeAccordion from '../RecipeAccordion/RecipeAccordion'
+import { RecipeInput, UserInput } from '@/types';
 
-export default function FilterableRecipeTable({recipeInput}) {
-    const [userPreferences, setUserPreferences] = useState({ 'ingredients': [], 'preferences': [] });
-    const [recipes, setRecipes] = useState(recipeInput);
+export default function FilterableRecipeTable(recipeInput: RecipeInput) {
+    const [userPreferences, setUserPreferences] = useState<UserInput>({ ingredients: [], preferences: [] });
+    const [recipes, setRecipes] = useState<RecipeInput>(recipeInput);
   
     return (
       <div className='container'>

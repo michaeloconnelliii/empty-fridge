@@ -8,7 +8,7 @@ export default function RecipeAccordion({ recipes, setRecipes }: RecipeInputs) {
     recipes.forEach((recipe) => {
       RecipeAccordionElements.push(
         <RecipeAccordionElement
-          recipe={ recipe }
+          recipe = { recipe }
           setRecipes = { setRecipes } />
         );
       }

@@ -1,8 +1,8 @@
 import UserPreferenceSearchBar from './UserPreferenceSearchBar';
 import UserPreferenceTable from './UserPreferenceTable';
-import { UserPreferencesInvokeSet } from '@/types'
+import { UserPreferences } from '@/types'
 
-export default function FilterableUserPreferenceTable({userInput, setUserPreferences}: UserPreferencesInvokeSet) {
+export default function FilterableUserPreferenceTable({userInput, setUserPreferences}: UserPreferences) {
     return (
       <div className='container'>
         <UserPreferenceSearchBar userInput={userInput} 

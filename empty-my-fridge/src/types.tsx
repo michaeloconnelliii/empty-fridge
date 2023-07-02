@@ -3,11 +3,11 @@ export interface UserInput {
     preferences: String[]
 };
 
-export type SetUserPreferencesFn = (prevUserPrefernce: React.Dispatch<UserInput>) => UserInput;
+export type SetUserPreferences = React.Dispatch<React.SetStateAction<UserInput>>;
 
-export interface UserPreferencesInvokeSet {
+export interface UserPreferences {
     userInput: UserInput,
-    setUserPreferences: SetUserPreferencesFn
+    setUserPreferences: SetUserPreferences
 };
 
 export interface RecipeInputElement {
@@ -20,14 +20,14 @@ export interface RecipeInputElement {
 
 export type RecipeInput = RecipeInputElement[];
 
-export type SetRecipeInputFn = (prevRecipeInput: React.Dispatch<RecipeInput>) => RecipeInput;
+export type SetRecipeInput = React.Dispatch<React.SetStateAction<RecipeInput>>;
 
 export interface RecipeInputSingle {
     recipe: RecipeInputElement,
-    setRecipes: SetRecipeInputFn
+    setRecipes: SetRecipeInput
 };
 
 export interface RecipeInputs {
     recipes: RecipeInput,
-    setRecipes: SetRecipeInputFn
-}
+    setRecipes: SetRecipeInput
+};

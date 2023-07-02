@@ -1,6 +1,6 @@
-import { UserPreferencesInvokeSet } from '@/types';
+import { UserPreferences } from '@/types';
 
-export default function UserPreference({ userInput, setUserPreferences }: UserPreferencesInvokeSet) {
+export default function UserPreference({ userInput, setUserPreferences }: UserPreferences) {
   
     function removeUserPreference(userInputListElement: String, preferenceCategory: String) {
       setUserPreferences( prevUserInput => {
