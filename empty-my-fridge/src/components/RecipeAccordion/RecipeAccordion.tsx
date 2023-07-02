@@ -1,13 +1,14 @@
 import RecipeAccordionElement from './RecipeAccordionElement';
 import RecipeSearchBar from './RecipeSearchBar';
+import { ReactElement } from 'react';
+import { RecipeInputSingle, RecipeInputs } from '@/types';
 
-export default function RecipeAccordion({ recipes, setRecipes }) {
-    let RecipeAccordionElements = [];
+export default function RecipeAccordion({ recipes, setRecipes }: RecipeInputs) {
+    let RecipeAccordionElements: ReactElement<RecipeInputSingle>[] = [];
     recipes.forEach((recipe) => {
       RecipeAccordionElements.push(
         <RecipeAccordionElement
-          key = { recipe.id }
-          recipe = { recipe }
+          recipe={ recipe }
           setRecipes = { setRecipes } />
         );
       }
@@ -16,7 +17,8 @@ export default function RecipeAccordion({ recipes, setRecipes }) {
     return (
       <div className='container'>
         <h2 className='text-center mb-4 font-weight-bold'>Recipes</h2>
-        <RecipeSearchBar setRecipes={setRecipes} />
+        <RecipeSearchBar recipes={ recipes } 
+                         setRecipes={ setRecipes } />
         <div className='accordion' 
              id='recipeAccordion'>
           { RecipeAccordionElements }
