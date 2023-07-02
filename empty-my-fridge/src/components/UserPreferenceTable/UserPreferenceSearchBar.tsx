@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 
-export default function UserPreferenceSearchBar({setUserPreferences}) {
+interface UserInput {
+  ingredients: String[],
+  preferences: String[]
+};
+
+interface SetUserPreferences {
+  setUserPreferences: React.Dispatch<React.SetStateAction<UserInput>>;
+};
+
+export default function UserPreferenceSearchBar({setUserPreferences}: SetUserPreferences) {
     const [preferenceInput, setPreferenceInput] = useState('');
     const [preferenceCategory, setPreferenceCategory] = useState('Ingredient');
   
     // Clear user preferences according to ddl value.
     function clearUserPreferences() {
-      setUserPreferences( prevUserInput => {
+      setUserPreferences( (prevUserInput: UserInput) => {
         const updatedUserInput = { ...prevUserInput };
   
         if(preferenceCategory === 'Ingredient') {
@@ -49,9 +58,9 @@ export default function UserPreferenceSearchBar({setUserPreferences}) {
         </select>
         <input value={preferenceInput} 
                type="text" 
-               className="form-control mr-2" 
+               className="form-control mr-2"
                placeholder="Enter..." 
-               maxLength='200' 
+               maxLength={200} 
                onChange={(e) => setPreferenceInput(e.target.value)} />
         <div className='ml-md-0 ml-sm-5'>
           <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" 
