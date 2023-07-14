@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RecipeInputs } from '@/types';
+import { RecipeInputs } from '@/typings';
 
 export default function RecipeSearchBar({recipes, setRecipes}: RecipeInputs) {
     const [isLoading, setIsLoading] = useState(false);

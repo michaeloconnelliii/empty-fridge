@@ -1,4 +1,4 @@
-import { RecipeInputSingle } from "@/types";
+import { RecipeInputSingle } from '@/typings';
 
 export default function RecipeAccordionElement({ recipe, setRecipes } : RecipeInputSingle) {
     const ingredientUserHas = recipe.ingredients_user_has;

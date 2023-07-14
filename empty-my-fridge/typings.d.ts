@@ -1,16 +1,16 @@
-export interface UserInput {
+export declare interface UserInput {
     ingredients: String[],
     preferences: String[]
 };
 
-export type SetUserPreferences = React.Dispatch<React.SetStateAction<UserInput>>;
+export declare type SetUserPreferences = React.Dispatch<React.SetStateAction<UserInput>>;
 
 export interface UserPreferences {
     userInput: UserInput,
     setUserPreferences: SetUserPreferences
 };
 
-export interface RecipeInputElement {
+export declare interface RecipeInputElement {
     id: React.Key,
     title: String,
     recipe_description: String,
@@ -18,16 +18,16 @@ export interface RecipeInputElement {
     additional_ingredients_needed: String[]
 }
 
-export type RecipeInput = RecipeInputElement[];
+export declare type RecipeInput = RecipeInputElement[];
 
-export type SetRecipeInput = React.Dispatch<React.SetStateAction<RecipeInput>>;
+export declare type SetRecipeInput = React.Dispatch<React.SetStateAction<RecipeInput>>;
 
-export interface RecipeInputSingle {
+export declare interface RecipeInputSingle {
     recipe: RecipeInputElement,
     setRecipes: SetRecipeInput
 };
 
-export interface RecipeInputs {
+export declare interface RecipeInputs {
     recipes: RecipeInput,
     setRecipes: SetRecipeInput
 };

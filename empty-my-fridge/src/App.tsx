@@ -1,6 +1,6 @@
 import './styles/App.css';
 import FilterableRecipeTable from './components/RecipeTable/FilterableRecipeTable'
-import { RecipeInput } from './types';
+import { RecipeInput } from '@/typings';
 
 const USER_INPUT_DATA = {
   ingredients : ["ahi tuna", "avocado", "lemon"], 

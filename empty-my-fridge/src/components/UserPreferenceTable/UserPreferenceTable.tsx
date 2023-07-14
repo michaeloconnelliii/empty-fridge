@@ -1,5 +1,5 @@
 import UserPreference from './UserPreference';
-import { UserPreferences } from '@/types';
+import { UserPreferences } from '@/typings';
 
 export default function UserPreferenceTable({ userInput, setUserPreferences }: UserPreferences) {
     return (

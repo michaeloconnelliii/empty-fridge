@@ -1,6 +1,6 @@
 import UserPreferenceSearchBar from './UserPreferenceSearchBar';
 import UserPreferenceTable from './UserPreferenceTable';
-import { UserPreferences } from '@/types'
+import { UserPreferences } from '@/typings';
 
 export default function FilterableUserPreferenceTable({userInput, setUserPreferences}: UserPreferences) {
     return (

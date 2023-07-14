@@ -1,7 +1,7 @@
 import RecipeAccordionElement from './RecipeAccordionElement';
 import RecipeSearchBar from './RecipeSearchBar';
 import { ReactElement } from 'react';
-import { RecipeInputSingle, RecipeInputs } from '@/types';
+import { RecipeInputSingle, RecipeInputs } from '@/typings';
 
 export default function RecipeAccordion({ recipes, setRecipes }: RecipeInputs) {
     let RecipeAccordionElements: ReactElement<RecipeInputSingle>[] = [];

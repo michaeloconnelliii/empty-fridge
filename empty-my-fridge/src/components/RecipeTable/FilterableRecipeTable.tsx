@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import FilterableUserPreferenceTable from '../UserPreferenceTable/FilterableUserPreferenceTable';
 import RecipeAccordion from '../RecipeAccordion/RecipeAccordion'
-import { RecipeInput, UserInput } from '@/types';
+import { RecipeInput, UserInput } from '@/typings';
 
 interface FilterableRecipeTableProps {
   recipeInput: RecipeInput;

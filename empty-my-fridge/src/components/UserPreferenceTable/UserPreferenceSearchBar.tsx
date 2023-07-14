@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UserInput, UserPreferences } from '@/types';
+import { UserInput, UserPreferences } from '@/typings';
 
 export default function UserPreferenceSearchBar({userInput, setUserPreferences}: UserPreferences) {
     const [preferenceInput, setPreferenceInput] = useState('');
