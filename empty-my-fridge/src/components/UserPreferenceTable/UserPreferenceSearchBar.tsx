@@ -24,23 +24,32 @@ export default function UserPreferenceSearchBar({userInput, setUserPreferences}:
   
     // Add preference according to ddl value. Clear input field after adding.
     function addUserPreference() {
-      setUserPreferences( prevUserInput => {
-        const updatedUserInput = { ...prevUserInput };
-  
-        if(preferenceCategory === 'Ingredient') {
-          updatedUserInput.ingredients.push(preferenceInput);
-        } else if(preferenceCategory === 'Preference') {
-          updatedUserInput.preferences.push(preferenceInput);
-        }
-  
-        return updatedUserInput;
-      });
-  
+
+      if(preferenceInput) {
+        setUserPreferences( prevUserInput => {
+          const updatedUserInput = { ...prevUserInput };
+    
+          if(preferenceCategory === 'Ingredient') {
+            updatedUserInput.ingredients.push(preferenceInput);
+          } else if(preferenceCategory === 'Preference') {
+            updatedUserInput.preferences.push(preferenceInput);
+          }
+    
+          return updatedUserInput;
+        });
+      }
+      
       setPreferenceInput('');
     }
   
     return (
-      <form className="form-inline justify-content-sm-center mb-3">
+      <form className="form-inline justify-content-sm-center mb-3"
+            onSubmit={
+              (e)=> {
+                e.preventDefault();
+                addUserPreference();
+              }
+            }>
         <select id='preference-ddl' 
                 value={preferenceCategory} 
                 className="form-control form-control-sm mr-2" 
@@ -55,8 +64,9 @@ export default function UserPreferenceSearchBar({userInput, setUserPreferences}:
                maxLength={200} 
                onChange={(e) => setPreferenceInput(e.target.value)} />
         <div className='ml-md-0 ml-sm-5'>
-          <button className="btn btn-primary mr-2 ml-md-0 ml-sm-3" 
-                  type='button' 
+          <button id='addUserPreferenceBtn'
+                  className="btn btn-primary mr-2 ml-md-0 ml-sm-3"
+                  type='button'
                   onClick={addUserPreference}>
             Add
           </button>
