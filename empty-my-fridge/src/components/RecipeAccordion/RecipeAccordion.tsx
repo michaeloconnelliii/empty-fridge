@@ -8,6 +8,7 @@ export default function RecipeAccordion({ recipes, setRecipes }: RecipeInputs) {
     recipes.forEach((recipe) => {
       RecipeAccordionElements.push(
         <RecipeAccordionElement
+          key = { recipe.id }
           recipe = { recipe }
           setRecipes = { setRecipes } />
         );
