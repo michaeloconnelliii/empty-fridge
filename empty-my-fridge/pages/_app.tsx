@@ -40,10 +40,8 @@ export default function App() {
       <Head>
           <meta name="viewport" 
                 content="width=device-width, initial-scale=1" />
-          <meta
-            name="description"
-            content="Empty Fridge is an app designed to give you recipes based on ingredients and preferences."
-          />
+          <meta name="description"
+                content="Empty Fridge is an app designed to give you recipes based on ingredients and preferences." />
       </Head>
       <div>
         <FilterableRecipeTable recipeInput={RECIPES} />;
