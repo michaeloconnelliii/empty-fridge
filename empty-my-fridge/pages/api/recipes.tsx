@@ -25,5 +25,5 @@ const RECIPES : RecipeInput = [
 ];
 
 export default function handler(req, res) {
-  res.status(200).json({ recipes: RECIPES });
+  res.status(200).json( RECIPES );
 }

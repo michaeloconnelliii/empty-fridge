@@ -1,26 +1,34 @@
 import { useState } from 'react';
-import { RecipeInputs } from '@/typings';
+import { RecipeInputs, RecipeInput } from '@/typings';
 
-export default function RecipeSearchBar({recipes, setRecipes}: RecipeInputs) {
+export default function RecipeSearchBar({recipes, setRecipes, userInput}: RecipeInputs) {
     const [isLoading, setIsLoading] = useState(false);
     
     function clearRecipes() {
       setRecipes(() => []);
     }
+
+    async function fetchRecipes() {
+      try {
+        const response = await fetch('/api/recipes',
+                                  {
+                                    body: JSON.stringify(userInput),
+                                    method: "POST"
+                                  });
+        if (!response.ok) {
+          throw new Error('Failed to fetch recipes.');
+        }
+        const data: RecipeInput = await response.json();
+        setRecipes(prevRecipes => [...prevRecipes, ...data]);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
   
-    function findRecipes() {
+    async function findRecipes() {
       setIsLoading(true);
-  
-      setRecipes( prevRecipes => {
-        let updatedRecipes = [...prevRecipes];
-  
-        setTimeout(() => {
-          console.log("Delayed for 3 seconds.");
-          setIsLoading(false);
-        }, 3000);
-  
-        return prevRecipes;
-      });
+      await fetchRecipes();
+      setIsLoading(false);
     }
   
     return (

@@ -29,5 +29,6 @@ export declare interface RecipeInputSingle {
 
 export declare interface RecipeInputs {
     recipes: RecipeInput,
-    setRecipes: SetRecipeInput
+    setRecipes: SetRecipeInput,
+    userInput: UserInput
 };
