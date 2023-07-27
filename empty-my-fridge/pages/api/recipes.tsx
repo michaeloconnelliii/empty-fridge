@@ -25,5 +25,34 @@ const RECIPES : RecipeInput = [
 ];
 
 export default function handler(req, res) {
-  res.status(200).json( RECIPES );
+  if(req.method !== 'POST') {
+    res.status(405).send({ message: 'Only POST requests allowed' });
+    return;
+  }
+
+  // Ensure request body is parsable to begin with
+  let parsedRequestBody;
+  try {
+    parsedRequestBody = JSON.parse(req.body);
+  } catch(error) {
+    res.status(400).json({ error: 'Invalid JSON data in the request body.' });
+    return;
+  }
+
+  // Ensure request has ingredients and preferences parameters in the body
+  if(parsedRequestBody.hasOwnProperty("ingredients") && parsedRequestBody.hasOwnProperty("preferences")) {
+    // Remove undefined, null, or empty string values as well as nested arrays or objects on preferences and ingredients arrays
+    parsedRequestBody.ingredients = parsedRequestBody.ingredients.filter(ingredient => typeof ingredient === 'string' && ingredient.trim() !== '' && ingredient !== undefined);
+    parsedRequestBody.preferences = parsedRequestBody.preferences.filter(preference => typeof preference === 'string' && preference.trim() !== '' && preference !== undefined);
+
+    // Ensure ingredients and preferences contain the appropriate amount of elements after removing undefined, empty and null elements
+    if((parsedRequestBody.ingredients.length <= 20 && parsedRequestBody.ingredients.length > 0) &&
+       (parsedRequestBody.preferences.length <= 5 && parsedRequestBody.preferences.length > 0)) {
+        res.status(200).json( RECIPES );
+        return;
+    }
+  }
+
+  // If we don't pass checks above, return bad request response
+  res.status(400).send({ message: 'Please provide ingredients parameter with 1 to 20 ingredients and preferences parameter with 1 to 5 preferences.' });
 }
