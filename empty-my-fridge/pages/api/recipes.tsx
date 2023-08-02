@@ -24,7 +24,19 @@ const RECIPES : RecipeInput = [
   }
 ];
 
+function isOnlyLettersAndSpaces(str) {
+  return /^[a-zA-Z\s]+$/.test(str);
+}
+
 export default function handler(req, res) {
+  /* Request Criteria:
+   - Must submit POST request with object containing an ingredients and preferences array.
+   - Arrays can only contain strings that contain letters and spaces. 
+      - Entries not meeting that criteria will NOT be processed.
+   - Arrays can have a minimum of 1 entry and a maximum of 20 for ingredients and 5 for preferences.
+   
+   If request fails the above OR fails JSON.parse, 400. Anything other than POST, 405. */
+  
   if(req.method !== 'POST') {
     res.status(405).send({ message: 'Only POST requests allowed' });
     return;
@@ -41,11 +53,14 @@ export default function handler(req, res) {
 
   // Ensure request has ingredients and preferences parameters in the body
   if(parsedRequestBody.hasOwnProperty("ingredients") && parsedRequestBody.hasOwnProperty("preferences")) {
-    // Remove undefined, null, or empty string values as well as nested arrays or objects on preferences and ingredients arrays
-    parsedRequestBody.ingredients = parsedRequestBody.ingredients.filter(ingredient => typeof ingredient === 'string' && ingredient.trim() !== '' && ingredient !== undefined);
-    parsedRequestBody.preferences = parsedRequestBody.preferences.filter(preference => typeof preference === 'string' && preference.trim() !== '' && preference !== undefined);
+    /* Remove the following entries from ingredients and preferences arrays:
+         - Undefined, null or empty string values
+         - Strings containing numbers or special characters
+         - Nested objects, arrays, or any other type that isn't a string */
+    parsedRequestBody.ingredients = parsedRequestBody.ingredients.filter(ingredient => typeof ingredient === 'string' && ingredient.trim() !== '' && ingredient !== undefined && isOnlyLettersAndSpaces(ingredient));
+    parsedRequestBody.preferences = parsedRequestBody.preferences.filter(preference => typeof preference === 'string' && preference.trim() !== '' && preference !== undefined && isOnlyLettersAndSpaces(preference));
 
-    // Ensure ingredients and preferences contain the appropriate amount of elements after removing undefined, empty and null elements
+    // Ensure ingredients and preferences contain the appropriate amount of elements after removing entries described above
     if((parsedRequestBody.ingredients.length <= 20 && parsedRequestBody.ingredients.length > 0) &&
        (parsedRequestBody.preferences.length <= 5 && parsedRequestBody.preferences.length > 0)) {
         res.status(200).json( RECIPES );
@@ -54,5 +69,5 @@ export default function handler(req, res) {
   }
 
   // If we don't pass checks above, return bad request response
-  res.status(400).send({ message: 'Please provide ingredients parameter with 1 to 20 ingredients and preferences parameter with 1 to 5 preferences.' });
+  res.status(400).send({ message: 'Please provide ingredients parameter with 1 to 20 ingredients and preferences parameter with 1 to 5 preferences. Also note preferences and ingredients with special characters (other than the space character) or numbers will NOT be processed.' });
 }
