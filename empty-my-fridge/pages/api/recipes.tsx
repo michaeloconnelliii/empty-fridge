@@ -1,4 +1,10 @@
 import { RecipeInput } from '../../typings';
+import { Configuration, OpenAIApi } from 'openai';
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 const RECIPES : RecipeInput = [
   {
@@ -24,11 +30,36 @@ const RECIPES : RecipeInput = [
   }
 ];
 
+async function getRecipes(userInput) {
+  userInput = JSON.stringify(userInput);
+  
+  const chatCompletion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [ {role: "system", content: process.env.OPENAI_SYSTEM_CONTENT},
+                {role: "user", content: process.env.OPENAI_PROMPT},
+                {role: "assistant", content: "OK"},
+                {role: "user", content: userInput}
+              ]
+  });
+
+  let recipes = null;
+  if(chatCompletion.data.choices[0].message?.content) {
+    try{
+      recipes = JSON.parse(chatCompletion.data.choices[0].message.content);
+    }
+    catch(e) {
+      console.log(e.message);
+    }
+  }
+
+  return recipes;
+}
+
 function isOnlyLettersAndSpaces(str) {
   return /^[a-zA-Z\s]+$/.test(str);
 }
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   /* Request Criteria:
    - Must submit POST request with object containing an ingredients and preferences array.
    - Arrays can only contain strings that contain letters and spaces. 
@@ -63,7 +94,14 @@ export default function handler(req, res) {
     // Ensure ingredients and preferences contain the appropriate amount of elements after removing entries described above
     if((parsedRequestBody.ingredients.length <= 20 && parsedRequestBody.ingredients.length > 0) &&
        (parsedRequestBody.preferences.length <= 5 && parsedRequestBody.preferences.length > 0)) {
-        res.status(200).json( RECIPES );
+        let recipes = await getRecipes(parsedRequestBody);
+        // If we get a valid response from API
+        if(recipes)
+        {
+          res.status(200).json( recipes );
+        } else {
+          res.status(500).send({message: 'Something occured with API. Project maintainer/creator needs to look into what went wrong.'});
+        }
         return;
     }
   }
