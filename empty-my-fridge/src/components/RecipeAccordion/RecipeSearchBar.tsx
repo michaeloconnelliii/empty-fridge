@@ -4,12 +4,15 @@ import { RecipeInputs, RecipeInput } from '@/typings';
 export default function RecipeSearchBar({recipes, setRecipes, userInput}: RecipeInputs) {
     const [isLoading, setIsLoading] = useState(false);
     const [isPreferenceOrIngredientEmpty, setIsPreferenceOrIngredientEmpty] = useState(false);
+    const [fetchRecipeFailure, setFetchRecipeFailure] = useState(false);
     
     function clearRecipes() {
       setRecipes(() => []);
     }
 
     async function fetchRecipes() {
+      setFetchRecipeFailure(false);
+
       try {
         // User must input at least one ingredient and preference for API call to be successful
         if(!userInput.ingredients.length || !userInput.preferences.length) {
@@ -27,12 +30,15 @@ export default function RecipeSearchBar({recipes, setRecipes, userInput}: Recipe
           throw new Error('Failed to fetch recipes.');
         }
         
-        const data: RecipeInput = await response.json();
-        
-        // Add new recipes to existing recipe output
-        setRecipes(prevRecipes => [...prevRecipes, ...data]);
+        let data: RecipeInput = await response.json();
+
+        // Add new recipes to existing recipe output, update ids
+        const allRecipes = [...recipes, ...data].map((recipe, index) => {return { ...recipe, id: index } });
+        setRecipes(allRecipes);
       } catch (error) {
+        // In the event we fail to fetch recipes or form is wrong, let the user know
         console.error('Error fetching recipes:', error);
+        setFetchRecipeFailure(true);
       }
 
       setIsPreferenceOrIngredientEmpty(false);
@@ -64,6 +70,7 @@ export default function RecipeSearchBar({recipes, setRecipes, userInput}: Recipe
           </button>
         </form>
         <div className={`text-center text-danger ${isPreferenceOrIngredientEmpty ? '' : 'd-none'}`}>Please input at least one ingredient and preference.</div>
+        <div className={`text-center text-danger ${fetchRecipeFailure ? '' : 'd-none'}`}>Failed to fetch recipes. Try again or refresh the page. If refreshing doesn't work, contact project creator.</div>
       </>
     );
   }
