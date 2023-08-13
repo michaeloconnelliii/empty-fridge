@@ -77,7 +77,7 @@ export default function UserPreferenceSearchBar({userInput, setUserPreferences}:
                     onClick={clearUserPreferences}>
               Clear
             </button>
-            <button className="btn btn-secondary" data-toggle="modal" title="Help" data-target="#helpModal">?</button>
+            <button className="btn btn-secondary" type="button" data-toggle="modal" title="Help" data-target="#helpModal">?</button>
           </div>
         </form>
         <UserPreferenceHelpModal></UserPreferenceHelpModal>
