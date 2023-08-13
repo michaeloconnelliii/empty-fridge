@@ -31,8 +31,8 @@ async function getRecipes(userInput) {
   return recipes;
 }
 
-function isOnlyLettersAndSpaces(str) {
-  return /^[a-zA-Z\s]+$/.test(str);
+function isOnlyLettersSpacesAndHyphen(str) {
+  return /^[a-zA-Z\s\-]+$/.test(str);
 }
 
 export default async function handler(req, res) {
@@ -64,8 +64,8 @@ export default async function handler(req, res) {
          - Undefined, null or empty string values
          - Strings containing numbers or special characters
          - Nested objects, arrays, or any other type that isn't a string */
-    parsedRequestBody.ingredients = parsedRequestBody.ingredients.filter(ingredient => typeof ingredient === 'string' && ingredient.trim() !== '' && ingredient !== undefined && isOnlyLettersAndSpaces(ingredient));
-    parsedRequestBody.preferences = parsedRequestBody.preferences.filter(preference => typeof preference === 'string' && preference.trim() !== '' && preference !== undefined && isOnlyLettersAndSpaces(preference));
+    parsedRequestBody.ingredients = parsedRequestBody.ingredients.filter(ingredient => typeof ingredient === 'string' && ingredient.trim() !== '' && ingredient !== undefined && isOnlyLettersSpacesAndHyphen(ingredient));
+    parsedRequestBody.preferences = parsedRequestBody.preferences.filter(preference => typeof preference === 'string' && preference.trim() !== '' && preference !== undefined && isOnlyLettersSpacesAndHyphen(preference));
 
     // Ensure ingredients and preferences contain the appropriate amount of elements after removing entries described above
     if((parsedRequestBody.ingredients.length <= 20 && parsedRequestBody.ingredients.length > 0) &&
