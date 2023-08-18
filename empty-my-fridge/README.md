@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Empty Fridge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Background
+* <em>Empty Fridge</em> generates custom recipes based on ingredients and preferences (cuisine, diet specification, spice-level, etc.). I created it to come up with ideas for recipes using leftover ingredients I had in the fridge.
+* Usage is simple. Input at least one ingredient and preference and select <i>Find Recipes</i> and three recipes will be generated for you.
 
-## Available Scripts
+## Project Overview
+* OpenAI's <a href="https://platform.openai.com/docs/api-reference/chat">ChatGPT API</a> is used for generating the recipes. The project is built using <a href="https://nextjs.org/">NextJS</a> as its full-stack framework.<a href="https://react.dev/">React</a> with <a href="https://www.typescriptlang.org/">TypeScript</a> is used for the frontend.<a href="https://getbootstrap.com/">Bootstrap</a> is used for styling and some UI behavior (accordion drop down menu, help modal, etc.).<a href="https://jestjs.io/">Jest</a> is used for unit testing.
 
-In the project directory, you can run:
+## How to use
+1. Clone the repo
+2. Create a .env.local file. Add your <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key">OPENAI_API_KEY</a> and your relevant OPENAI_SYSTEM_CONTENT and OPENAI_PROMPT.
+3. Commands
+    1. Build: npm run build
+    2. Run (& debug using Chrome's Node Devtools): npm run dev
+    3. Test (using Jest): npm run test
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## What is in this repository
+* Pages/
+    * _app.tsx contains the parent component of the entire application (<i>FilterableRecipeTable</i>).
+    * document.tsx contains CSS and JS dependencies (Bootstrap & Google Fonts) that must always be present throughout the application lifecycle.
+* Pages/api/
+    * The project's only endpoint is recipes.tsx. It uses the user's preference and ingredient lists to use as an input in an API call to the OpenAI API explained above. Ingredient and preference list must have at least one element and no elements can contain characters other than letters (Aa - Zz), spaces (" ") and hyphens ("-"). If an element contains some other charcter, the element is thrown out of the input. Only POST requests are allowed and input must be in JSON format. There is also error checking if the API call fails.
+* src/
+    * Contains all the React components for the application.
+    * RecipeAccordion and RecipeAccordionElement contains the Recipe Accordion and all of its UI functionality. RecipeSearchBar contains the <i>Find Recipe<i> and <i>Clear Recipes</i> buttons and functionalities. This includes making the POST request to Pages/api/recipes.tsx.
+    * RecipeTable contains the applications main component: <i>FilterableRecipeTable</i>. Contains the user's preferences and recipes state.
+    * UserPreferenceTable contains all the UI functionality and states for inputting ingredient and recipes. This includes adding, removing and clearing ingredients and preferences. It also includes the <i>Help</i> menu.
+* _tests/_pages/recipes.test.ts
+    * <i>Jest</i> unit tests for the project's one endpoint. Mostly ensuring strict user input is enforced.
+* App.css
+    * The project's main indepedent styling sheet. Everything that isn't Bootstrap is here.
+* babel.config.js
+    * Babel is utilized as a dependency for <i>Jest</i>.
+* jest.config.ts
+    * <i>Jest</i> dependency. Only using it to explcitly define file extensions.
+* package-lock.json, package.json
+    * Project dependencies and commands.
+* tsconfig.json
+    * <i>TypeScript</i> configuration.
+* typings.d.ts
+    * <i>TypeScript</i> types used throughout the project's components (src/*).
