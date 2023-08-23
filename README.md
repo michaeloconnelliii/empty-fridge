@@ -23,7 +23,7 @@
     * The project's only endpoint is recipes.tsx. It uses the user's preference and ingredient lists to use as an input in an API call to the OpenAI API explained above. Ingredient and preference list must have at least one element and no elements can contain characters other than letters (Aa - Zz), spaces (" ") and hyphens ("-"). If an element contains some other charcter, the element is thrown out of the input. Only POST requests are allowed and input must be in JSON format. There is also error checking if the API call fails.
 * src/
     * Contains all the React components for the application.
-    * RecipeAccordion and RecipeAccordionElement contains the Recipe Accordion and all of its UI functionality. RecipeSearchBar contains the <i>Find Recipe<i> and <i>Clear Recipes</i> buttons and functionalities. This includes making the POST request to Pages/api/recipes.tsx.
+    * RecipeAccordion and RecipeAccordionElement contains the Recipe Accordion and all of its UI functionality. RecipeSearchBar contains the <i>Find Recipe</i> and <i>Clear Recipes</i> buttons and functionalities. This includes making the POST request to Pages/api/recipes.tsx.
     * RecipeTable contains the applications main component: <i>FilterableRecipeTable</i>. Contains the user's preferences and recipes state.
     * UserPreferenceTable contains all the UI functionality and states for inputting ingredient and recipes. This includes adding, removing and clearing ingredients and preferences. It also includes the <i>Help</i> menu.
 * _tests/_pages/recipes.test.ts
